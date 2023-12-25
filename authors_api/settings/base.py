@@ -30,6 +30,7 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "drf_yasg",
     "corsheaders",
+    "djcelery_email",
 ]
 
 LOCAL_APPS = [
@@ -82,9 +83,7 @@ WSGI_APPLICATION = "authors_api.wsgi.application"
 #     }
 # }
 
-DATABASES = {
-    "default": env.db("DATABASE_URL")
-}
+DATABASES = {"default": env.db("DATABASE_URL")}
 
 # https://docs.djangoproject.com/en/5.0/topics/auth/passwords/
 PASSWORD_HASHERS = [
@@ -147,6 +146,17 @@ CORS_URLS_REGEX = r"^/api/.*$"
 
 AUTH_USER_MODEL = "users.User"
 
+CELERY_BROKER_URL = env("CELERY_BROKER")
+CELERY_RESULT_BACKEND = CELERY_BROKER_URL
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALZIZER = "json"
+CELERY_RESULT_SERIALIZER = "json"
+CELERY_RESULT_BACKEND_MAX_RETRIES = 10
+CELERY_TASK_SEND_SENT_EVENT = True
+
+if USE_TZ:
+    CELERY_TIMEZONE = TIME_ZONE
+
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
@@ -160,11 +170,8 @@ LOGGING = {
         "console": {
             "level": "DEBUG",
             "class": "logging.StreamHandler",
-            "formatter": "verbose"
+            "formatter": "verbose",
         },
     },
-    "root": {
-        "level": "INFO",
-        "handlers": ["console"]
-    }
+    "root": {"level": "INFO", "handlers": ["console"]},
 }
