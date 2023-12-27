@@ -18,6 +18,8 @@ CSRF_TRUSTED_ORIGINS = [
 EMAIL_BACKEND = "djcelery_email.backends.CeleryEmailBackend"
 EMAIL_HOST = env("EMAIL_HOST", default="mailhog")
 EMAIL_PORT = env("EMAIL_PORT")
-DEFAULT_FROM_EMAIL = "support@apiimmperfect.site"
+DEFAULT_FROM_EMAIL = "support@updaun.site"
 DOMAIN = env("DOMAIN")
 SITE_NAME = "Authors Haven"
+
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
