@@ -1,5 +1,7 @@
 import uuid
+
 from django.db import models
+
 
 class TimeStampedModel(models.Model):
     pkid = models.BigAutoField(primary_key=True, editable=False)
@@ -10,4 +12,3 @@ class TimeStampedModel(models.Model):
     class Meta:
         abstract = True
         ordering = ["-created_at", "-updated_at"]
-        

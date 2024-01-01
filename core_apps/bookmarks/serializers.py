@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from .models import Bookmark
 
 
@@ -15,4 +16,3 @@ class BookmarkSerializer(serializers.ModelSerializer):
             "created_at",
         ]
         read_only_fields = ["user"]
-        

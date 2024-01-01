@@ -20,7 +20,7 @@ migrate:
 	docker compose -f local.yml run --rm api python manage.py migrate
 
 collectstatic:
-	docker compose -f local.yml run --rm api python manage.py collectstatic --noinput --clear
+	docker compose -f local.yml run --rm api python manage.py collectstatic --no-input --clear
 
 superuser:
 	docker compose -f local.yml run --rm api python manage.py createsuperuser
@@ -32,7 +32,7 @@ volume:
 	docker volume inspect src_local_postgres_data
 
 authors-db:
-	docker compose -f local.yml exec postgres psql --username=updaun --dbname=authors-live
+	docker compose -f local.yml exec postgres psql --username=alphaogilo --dbname=authors-live
 
 flake8:
 	docker compose -f local.yml exec api flake8 .

@@ -5,9 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from taggit.managers import TaggableManager
 
 from core_apps.common.models import TimeStampedModel
+
 from .read_time_engine import ArticleReadTimeEngine
 
 User = get_user_model()
+
 
 class Clap(TimeStampedModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="claps")
@@ -19,6 +21,7 @@ class Clap(TimeStampedModel):
 
     def __str__(self):
         return f"{self.user.first_name} clapped {self.article.title}"
+
 
 class Article(TimeStampedModel):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name="articles")
@@ -42,7 +45,7 @@ class Article(TimeStampedModel):
 
     def view_count(self):
         return self.article_views.count()
-    
+
     def average_rating(self):
         ratings = self.ratings.all()
         if ratings.count() > 0:
@@ -70,8 +73,10 @@ class ArticleView(TimeStampedModel):
 
     def __str__(self):
         return f"{self.article.title} viewed by {self.user.first_name if self.user else 'Anonymous'} from IP {self.viewer_ip}"
-    
+
     @classmethod
     def record_view(cls, article, user, viewer_ip):
-        view, _ = cls.objects.get_or_create(article=article, user=user, viewer_ip=viewer_ip)
+        view, _ = cls.objects.get_or_create(
+            article=article, user=user, viewer_ip=viewer_ip
+        )
         view.save()
